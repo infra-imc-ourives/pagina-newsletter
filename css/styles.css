@@ -775,6 +775,129 @@ img {
   max-width: 32rem;
 }
 
+/* ═══════════════════ PÁGINA · POLÍTICA DE PRIVACIDADE ═══════════════════ */
+.policy-header {
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-deep);
+  padding: 1.4rem 0;
+}
+
+.policy-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.policy-header__brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.policy-header__brand span {
+  font-family: var(--font-script);
+  color: var(--gold);
+  font-size: 1.05rem;
+  margin-left: 0.3rem;
+}
+
+.policy-header__back {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.policy-header__back:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+.policy {
+  background: var(--bg-deep);
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 6rem);
+  min-height: 60vh;
+}
+
+.policy__container {
+  max-width: 46rem;
+}
+
+.policy__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin: 1rem 0 1.4rem;
+}
+
+.policy__intro {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin-bottom: 2.5rem;
+}
+
+.policy__intro strong {
+  color: var(--text);
+}
+
+.policy__section {
+  margin-bottom: 2.2rem;
+}
+
+.policy__section h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--gold-light);
+  margin-bottom: 0.8rem;
+}
+
+.policy__section p {
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+}
+
+.policy__section p strong {
+  color: var(--text);
+}
+
+.policy__section ul {
+  color: var(--text-muted);
+  padding-left: 1.3rem;
+  margin-bottom: 0.8rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.policy__section a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.policy__cta {
+  max-width: 24rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .policy-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .policy__cta {
+    max-width: none;
+    width: 100%;
+  }
+}
+
 /* ═══════════════════ FOOTER ═══════════════════ */
 .footer {
   border-top: 1px solid var(--line-soft);
