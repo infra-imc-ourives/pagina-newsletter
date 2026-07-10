@@ -794,6 +794,10 @@ img {
     text-shadow: 0 2px 18px rgba(4, 9, 24, 0.8);
   }
 
+  .hero__title em {
+    text-shadow: none;
+  }
+
   .hero__signature {
     text-shadow: 0 2px 14px rgba(4, 9, 24, 0.85);
   }
