@@ -786,7 +786,7 @@ img {
 
   .hero__bg {
     background:
-      radial-gradient(120% 70% at 50% 12%, #12305e 0%, #0a1a3c 45%, var(--bg-deep) 80%);
+      radial-gradient(120% 70% at 50% 12%, rgba(18, 48, 94, 0.55) 0%, rgba(8, 18, 40, 0.5) 45%, var(--bg-deep) 80%);
   }
 
   .hero__title {
