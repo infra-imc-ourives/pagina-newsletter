@@ -4,11 +4,18 @@
    ═══════════════════════════════════════════════════════════════ */
 
 const FORM_CONFIG = {
-  // Cole aqui a URL do seu webhook / integração
-  // (RD Station, ActiveCampaign, Mailchimp, Make, Zapier, n8n…).
-  // Enquanto estiver vazio, o formulário roda em modo demonstração:
-  // valida os campos e exibe a tela de sucesso sem enviar dados.
-  endpoint: "",
+  // Envio via FormSubmit (https://formsubmit.co) direto para o e-mail abaixo —
+  // serviço gratuito, sem cadastro nem chave de API. Cada lead chega por
+  // e-mail em infraestrutura@elainneourives.com.br.
+  //
+  // IMPORTANTE: no primeiro envio, o FormSubmit manda um e-mail de
+  // confirmação para esse endereço — é preciso clicar no link uma única vez
+  // para ativar o recebimento dos próximos leads.
+  //
+  // Para trocar por outra ferramenta (RD Station, ActiveCampaign, Mailchimp,
+  // Make, Zapier, n8n…), basta substituir o endpoint abaixo pela URL do seu
+  // webhook.
+  endpoint: "https://formsubmit.co/ajax/infraestrutura@elainneourives.com.br",
 
   // Identificador da origem do lead, enviado junto com os dados.
   source: "lp-cartas-da-cocriacao",
@@ -114,6 +121,9 @@ function initForm() {
       telefone: form.querySelector("#telefone").value.replace(/\D/g, ""),
       origem: FORM_CONFIG.source,
       data: new Date().toISOString(),
+      _subject: "Novo lead · Cartas da Cocriação",
+      _captcha: "false",
+      _template: "table",
     };
 
     submitBtn.classList.add("is-loading");
@@ -122,7 +132,10 @@ function initForm() {
       if (FORM_CONFIG.endpoint) {
         const response = await fetch(FORM_CONFIG.endpoint, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
           body: JSON.stringify(payload),
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
