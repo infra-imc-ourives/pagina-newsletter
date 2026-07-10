@@ -21,6 +21,26 @@ const FORM_CONFIG = {
   source: "lp-pilulas-da-cocriacao",
 };
 
+// Webhook do n8n: recebe cada lead cadastrado com os dados do
+// formulário, a URL da página e os parâmetros UTM da visita.
+// IMPORTANTE: o webhook precisa aceitar requisições cross-origin
+// (CORS) vindas do domínio desta página para que o navegador
+// consiga entregar os dados.
+const WEBHOOK_CONFIG = {
+  url: "https://automacao-n8n-n8n.6v8bw5.easypanel.host/webhook/pilulas-cocriacao-cadastro",
+};
+
+/* ── Parâmetros UTM presentes na URL da visita ────────────────── */
+function getUtmParams() {
+  const params = new URLSearchParams(window.location.search);
+  const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+  const utms = {};
+  utmKeys.forEach((key) => {
+    utms[key] = params.get(key) || "";
+  });
+  return utms;
+}
+
 /* ── Máscara de telefone brasileiro: (00) 00000-0000 ─────────── */
 function maskPhone(value) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -115,34 +135,71 @@ function initForm() {
       return;
     }
 
-    const payload = {
+    const leadData = {
       nome: form.querySelector("#nome").value.trim(),
       email: form.querySelector("#email").value.trim().toLowerCase(),
       telefone: form.querySelector("#telefone").value.replace(/\D/g, ""),
       origem: FORM_CONFIG.source,
       data: new Date().toISOString(),
-      _subject: "Novo lead · Pílulas da Cocriação",
-      _captcha: "false",
-      _template: "table",
     };
 
     submitBtn.classList.add("is-loading");
 
-    try {
-      if (FORM_CONFIG.endpoint) {
-        const response = await fetch(FORM_CONFIG.endpoint, {
+    const requests = [];
+
+    if (FORM_CONFIG.endpoint) {
+      const formSubmitPayload = {
+        ...leadData,
+        _subject: "Novo lead · Pílulas da Cocriação",
+        _captcha: "false",
+        _template: "table",
+      };
+      requests.push(
+        fetch(FORM_CONFIG.endpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          body: JSON.stringify(payload),
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      } else {
+          body: JSON.stringify(formSubmitPayload),
+        }).then((response) => {
+          if (!response.ok) throw new Error(`FormSubmit HTTP ${response.status}`);
+        })
+      );
+    }
+
+    if (WEBHOOK_CONFIG.url) {
+      const webhookPayload = {
+        ...leadData,
+        pagina_url: window.location.href,
+        utms: getUtmParams(),
+      };
+      requests.push(
+        fetch(WEBHOOK_CONFIG.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(webhookPayload),
+        }).then((response) => {
+          if (!response.ok) throw new Error(`Webhook n8n HTTP ${response.status}`);
+        })
+      );
+    }
+
+    try {
+      if (requests.length === 0) {
         // Modo demonstração: nenhum endpoint configurado ainda
-        console.info("[Pílulas da Cocriação] Lead capturado (demo):", payload);
+        console.info("[Pílulas da Cocriação] Lead capturado (demo):", leadData);
         await new Promise((resolve) => setTimeout(resolve, 700));
+      } else {
+        const results = await Promise.allSettled(requests);
+        results.forEach((result) => {
+          if (result.status === "rejected") {
+            console.error("[Pílulas da Cocriação] Falha ao enviar lead:", result.reason);
+          }
+        });
+        if (results.every((result) => result.status === "rejected")) {
+          throw new Error("Todos os envios do lead falharam");
+        }
       }
 
       form.hidden = true;

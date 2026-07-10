@@ -56,6 +56,47 @@ Deixando o `endpoint` em branco (`""`), o formulário roda em **modo
 demonstração**: valida os campos e mostra a tela de sucesso sem enviar dados
 (o lead aparece no console do navegador).
 
+## Webhook n8n
+
+Além do FormSubmit, cada cadastro também é enviado para um webhook do n8n,
+configurado em `js/main.js`:
+
+```js
+const WEBHOOK_CONFIG = {
+  url: "https://automacao-n8n-n8n.6v8bw5.easypanel.host/webhook/pilulas-cocriacao-cadastro",
+};
+```
+
+O envio inclui os dados do formulário, a URL completa da página no momento
+do cadastro e os parâmetros UTM da visita:
+
+```json
+{
+  "nome": "Maria Silva",
+  "email": "maria@email.com",
+  "telefone": "11999999999",
+  "origem": "lp-pilulas-da-cocriacao",
+  "data": "2026-07-10T12:00:00.000Z",
+  "pagina_url": "https://pagina-newsletter.vercel.app/?utm_source=instagram&utm_medium=social",
+  "utms": {
+    "utm_source": "instagram",
+    "utm_medium": "social",
+    "utm_campaign": "",
+    "utm_term": "",
+    "utm_content": ""
+  }
+}
+```
+
+Os dois envios (FormSubmit e webhook) acontecem em paralelo e de forma
+independente — se um falhar, o outro ainda é tentado, e a tela de sucesso
+só deixa de aparecer se **ambos** falharem. Deixar `WEBHOOK_CONFIG.url` em
+branco (`""`) desativa esse envio.
+
+**Importante:** o webhook precisa aceitar requisições cross-origin (CORS)
+vindas do domínio desta página, já que a chamada parte diretamente do
+navegador do visitante.
+
 ## Imagens
 
 As fotos da Elainne devem ser salvas em `assets/` — veja as instruções em
