@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cartas da Cocriação · by Elainne Ourives</title>
+  <meta name="description" content="Receba toda semana uma carta exclusiva da Elainne Ourives em seu e-mail e descubra como cocriar a vida que você merece. Inscreva-se gratuitamente." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cartas da Cocriação · by Elainne Ourives" />
+  <meta property="og:description" content="Uma carta exclusiva por semana, direto no seu e-mail, para você cocriar a vida que merece." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/hero-desktop.jpg" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✉️</text></svg>" />
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ══════════════════ DOBRA 1 · HERO + FORMULÁRIO ══════════════════ -->
+  <header class="hero" id="inicio">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__stars" aria-hidden="true"></div>
+    <div class="hero__glow" aria-hidden="true"></div>
+
+    <div class="container hero__grid">
+
+      <div class="hero__copy reveal">
+        <p class="eyebrow">
+          <svg class="eyebrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 7.5 12 13l9-5.5M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Newsletter semanal &middot; 100% gratuita
+        </p>
+
+        <h1 class="hero__title">Cartas da <em>Cocriação</em></h1>
+        <p class="hero__signature">by Elainne Ourives</p>
+
+        <p class="hero__lead">
+          Receba toda semana uma carta exclusiva da Elainne Ourives em seu
+          e-mail e descubra como <strong>cocriar a vida que você merece</strong>.
+        </p>
+
+        <ul class="hero__benefits">
+          <li>
+            <span class="check" aria-hidden="true">✦</span>
+            Reflexões e direcionamentos que não são publicados em nenhuma rede social
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">✦</span>
+            Práticas simples para elevar sua frequência ao longo da semana
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">✦</span>
+            Convites e conteúdos em primeira mão, antes de todo mundo
+          </li>
+        </ul>
+      </div>
+
+      <div class="hero__form reveal reveal--delay">
+        <form id="lead-form" class="form-card" novalidate>
+          <div class="form-card__seal" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M3 7.5 12 13l9-5.5M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <h2 class="form-card__title">Receba sua primeira carta</h2>
+          <p class="form-card__subtitle">Preencha seus dados e comece a cocriar ainda esta semana.</p>
+
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" placeholder="Como você gosta de ser chamada(o)?" autocomplete="name" required />
+            <span class="field__error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="email">Seu melhor e-mail</label>
+            <input type="email" id="email" name="email" placeholder="nome@email.com" autocomplete="email" required />
+            <span class="field__error" role="alert"></span>
+          </div>
+
+          <div class="field">
+            <label for="telefone">WhatsApp</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="numeric" required />
+            <span class="field__error" role="alert"></span>
+          </div>
+
+          <!-- honeypot anti-spam: mantenha invisível -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" id="consent" name="consent" required />
+            <span>
+              Autorizo o envio das cartas e comunicações por e-mail e WhatsApp,
+              conforme a <a href="#" target="_blank" rel="noopener">Política de Privacidade</a>.
+            </span>
+          </label>
+
+          <button type="submit" class="btn btn--gold" id="submit-btn">
+            <span class="btn__label">Quero receber as cartas</span>
+            <span class="btn__loader" aria-hidden="true"></span>
+          </button>
+
+          <p class="form-card__note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 10V8a5 5 0 0 1 10 0v2m-9.5 0h9A1.5 1.5 0 0 1 18 11.5v6A1.5 1.5 0 0 1 16.5 19h-9A1.5 1.5 0 0 1 6 17.5v-6A1.5 1.5 0 0 1 7.5 10Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Seus dados estão seguros. Sem spam — cancele quando quiser.
+          </p>
+        </form>
+
+        <div class="form-success" id="form-success" hidden>
+          <div class="form-success__icon" aria-hidden="true">✉</div>
+          <h2>Sua primeira carta está a caminho!</h2>
+          <p>
+            Confira sua caixa de entrada (e a aba de promoções) nos próximos
+            minutos. Toda semana, uma nova carta chega até você.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="hero__scroll" href="#conteudo" aria-label="Rolar para saber mais">
+      <span></span>
+    </a>
+  </header>
+
+  <!-- ══════════════════ DOBRA 2 · O QUE VOCÊ RECEBE ══════════════════ -->
+  <main>
+    <section class="section section--cards" id="conteudo">
+      <div class="container">
+        <p class="eyebrow eyebrow--center reveal">O que chega na sua caixa de entrada</p>
+        <h2 class="section__title reveal">
+          Muito mais que uma newsletter:<br />
+          <em>um encontro semanal com a sua melhor versão</em>
+        </h2>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 6h13M4 10h13M4 14h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="m17.5 13.5 2.1 2.1-4.3 4.3-2.4.3.3-2.4 4.3-4.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Uma carta exclusiva por semana</h3>
+            <p>
+              Escrita pessoalmente pela Elainne, com reflexões profundas sobre
+              cocriação, mentalidade e propósito — conteúdo que você não
+              encontra nas redes.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.66-6.66-1.42 1.42M7.76 16.24l-1.42 1.42m0-11.32 1.42 1.42m8.48 8.48 1.42 1.42" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Práticas para elevar sua frequência</h3>
+            <p>
+              Exercícios simples e aplicáveis para você alinhar pensamento,
+              emoção e ação — e transformar intenção em realidade, semana após
+              semana.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 17.5 6.5 20l1-5.9L3 9.9l6-.9L12 3l3 6 6 .9-4.5 4.2 1 5.9L12 17.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Acesso em primeira mão</h3>
+            <p>
+              Novidades, convites para eventos e condições especiais chegam
+              primeiro para quem recebe as cartas — antes de qualquer
+              divulgação pública.
+            </p>
+          </article>
+        </div>
+
+        <div class="steps reveal">
+          <div class="step">
+            <span class="step__number">1</span>
+            <p><strong>Inscreva-se</strong><br />Deixe seu nome, e-mail e WhatsApp no formulário.</p>
+          </div>
+          <div class="step__divider" aria-hidden="true"></div>
+          <div class="step">
+            <span class="step__number">2</span>
+            <p><strong>Abra sua caixa de entrada</strong><br />Sua carta de boas-vindas chega em instantes.</p>
+          </div>
+          <div class="step__divider" aria-hidden="true"></div>
+          <div class="step">
+            <span class="step__number">3</span>
+            <p><strong>Cocrie toda semana</strong><br />Uma nova carta, um novo passo na vida que você merece.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ DOBRA 3 · SOBRE + CTA FINAL ══════════════════ -->
+    <section class="section section--about">
+      <div class="section--about__glow" aria-hidden="true"></div>
+      <div class="container about">
+        <figure class="about__photo reveal">
+          <img
+            src="assets/hero-mobile.jpg"
+            alt="Elainne Ourives"
+            loading="lazy"
+            onerror="this.closest('figure').classList.add('about__photo--fallback')"
+          />
+          <div class="about__photo-fallback" aria-hidden="true">
+            <span>E</span>
+          </div>
+        </figure>
+
+        <div class="about__copy reveal reveal--delay">
+          <p class="eyebrow">Quem escreve para você</p>
+          <h2 class="section__title section__title--left">Elainne Ourives</h2>
+          <p>
+            Referência em cocriação e desenvolvimento humano, Elainne Ourives
+            já impactou milhares de pessoas com uma mensagem clara: você é
+            capaz de cocriar a realidade que deseja viver.
+          </p>
+          <p>
+            Nas <strong>Cartas da Cocriação</strong>, ela compartilha, toda
+            semana, o que há de mais essencial em seus estudos e em sua
+            vivência — em um formato íntimo, direto e transformador, feito
+            para ser lido em poucos minutos e praticado a vida inteira.
+          </p>
+
+          <blockquote class="about__quote">
+            “Quando você muda a frequência do seu pensamento, muda a
+            realidade que você atrai.”
+          </blockquote>
+
+          <a href="#inicio" class="btn btn--gold btn--wide js-scroll-top">
+            <span class="btn__label">Quero cocriar a vida que mereço</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__brand">Cartas da Cocriação <span>by Elainne Ourives</span></p>
+      <p class="footer__legal">
+        © <span id="year">2026</span> Elainne Ourives. Todos os direitos reservados.
+        Seus dados são tratados conforme a LGPD.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
