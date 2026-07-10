@@ -23,6 +23,8 @@
 </head>
 <body>
 
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
   <!-- ══════════════════ DOBRA 1 · HERO + FORMULÁRIO ══════════════════ -->
   <header class="hero" id="inicio">
     <div class="hero__bg" aria-hidden="true"></div>
@@ -31,7 +33,7 @@
 
     <div class="container hero__grid">
 
-      <div class="hero__copy reveal">
+      <div class="hero__copy reveal reveal--left">
         <p class="eyebrow">
           <svg class="eyebrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M3 7.5 12 13l9-5.5M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -48,22 +50,22 @@
         </p>
 
         <ul class="hero__benefits">
-          <li>
+          <li class="reveal">
             <span class="check" aria-hidden="true">✦</span>
             Reflexões e direcionamentos que não são publicados em nenhuma rede social
           </li>
-          <li>
+          <li class="reveal">
             <span class="check" aria-hidden="true">✦</span>
             Práticas simples para elevar sua frequência ao longo da semana
           </li>
-          <li>
+          <li class="reveal">
             <span class="check" aria-hidden="true">✦</span>
             Convites e conteúdos em primeira mão, antes de todo mundo
           </li>
         </ul>
       </div>
 
-      <div class="hero__form reveal reveal--delay">
+      <div class="hero__form reveal reveal--right reveal--delay">
         <form id="lead-form" class="form-card" novalidate>
           <div class="form-card__seal" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
@@ -193,17 +195,17 @@
         </div>
 
         <div class="steps reveal">
-          <div class="step">
+          <div class="step reveal">
             <span class="step__number">1</span>
             <p><strong>Inscreva-se</strong><br />Deixe seu nome, e-mail e WhatsApp no formulário.</p>
           </div>
           <div class="step__divider" aria-hidden="true"></div>
-          <div class="step">
+          <div class="step reveal">
             <span class="step__number">2</span>
             <p><strong>Abra sua caixa de entrada</strong><br />Sua pílula de boas-vindas chega em instantes.</p>
           </div>
           <div class="step__divider" aria-hidden="true"></div>
-          <div class="step">
+          <div class="step reveal">
             <span class="step__number">3</span>
             <p><strong>Cocrie toda semana</strong><br />Uma nova pílula, um novo passo na vida que você merece.</p>
           </div>

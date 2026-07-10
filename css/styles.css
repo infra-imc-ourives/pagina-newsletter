@@ -84,6 +84,25 @@ img {
   margin: 0 auto 1.25rem;
 }
 
+/* ── Barra de progresso de rolagem ───────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-light));
+  box-shadow: 0 0 10px rgba(227, 184, 89, 0.6);
+  z-index: 999;
+  transition: width 0.1s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    transition: none;
+  }
+}
+
 /* ═══════════════════ DOBRA 1 · HERO ═══════════════════ */
 .hero {
   position: relative;
@@ -107,6 +126,8 @@ img {
     linear-gradient(0deg, rgba(4, 9, 24, 0.9) 0%, rgba(4, 9, 24, 0.15) 30%),
     url("../assets/hero-desktop.jpg") center right / cover no-repeat,
     radial-gradient(120% 90% at 78% 30%, #12305e 0%, #0a1a3c 38%, var(--bg-deep) 78%);
+  scale: 1.12;
+  will-change: transform;
 }
 
 /* Névoa/brilho holográfico azul, como nas fotos de referência */
@@ -370,6 +391,24 @@ img {
   box-shadow:
     0 10px 30px rgba(227, 184, 89, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+
+.btn--gold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn--gold:hover::after {
+  left: 130%;
 }
 
 .btn--gold:hover {
@@ -380,6 +419,7 @@ img {
 
 .btn--gold:active {
   transform: translateY(0);
+  scale: 0.97;
 }
 
 .btn--gold:focus-visible {
@@ -537,11 +577,28 @@ img {
 }
 
 .card {
+  position: relative;
+  overflow: hidden;
   background: rgba(10, 20, 44, 0.55);
   border: 1px solid var(--line-soft);
   border-radius: var(--radius);
   padding: 2rem 1.7rem;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(227, 184, 89, 0.14), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .card:hover {
@@ -754,18 +811,39 @@ img {
 /* ═══════════════════ ANIMAÇÕES DE ENTRADA ═══════════════════ */
 .reveal {
   opacity: 0;
-  translate: 0 28px;
-  transition: opacity 0.7s ease, translate 0.7s ease;
+  translate: 0 32px;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), translate 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal--delay {
   transition-delay: 0.15s;
 }
 
+.reveal--left {
+  translate: -36px 0;
+}
+
+.reveal--right {
+  translate: 36px 0;
+}
+
 .reveal.is-visible {
   opacity: 1;
   translate: 0 0;
 }
+
+/* Cascata: cada item de uma lista/grade aparece um pouco depois do anterior */
+.cards .card:nth-child(1) { transition-delay: 0s; }
+.cards .card:nth-child(2) { transition-delay: 0.12s; }
+.cards .card:nth-child(3) { transition-delay: 0.24s; }
+
+.hero__benefits li:nth-child(1) { transition-delay: 0.1s; }
+.hero__benefits li:nth-child(2) { transition-delay: 0.22s; }
+.hero__benefits li:nth-child(3) { transition-delay: 0.34s; }
+
+.steps .step:nth-of-type(1) { transition-delay: 0s; }
+.steps .step:nth-of-type(2) { transition-delay: 0.12s; }
+.steps .step:nth-of-type(3) { transition-delay: 0.24s; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
