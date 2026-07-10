@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Cartas da Cocriação · Captura de leads
+   Pílulas da Cocriação · Captura de leads
    Configure o endpoint da sua ferramenta de e-mail marketing abaixo.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -18,7 +18,7 @@ const FORM_CONFIG = {
   endpoint: "https://formsubmit.co/ajax/infraestrutura@elainneourives.com.br",
 
   // Identificador da origem do lead, enviado junto com os dados.
-  source: "lp-cartas-da-cocriacao",
+  source: "lp-pilulas-da-cocriacao",
 };
 
 /* ── Máscara de telefone brasileiro: (00) 00000-0000 ─────────── */
@@ -36,7 +36,7 @@ function maskPhone(value) {
 /* ── Validações ──────────────────────────────────────────────── */
 const validators = {
   nome(value) {
-    if (value.trim().length < 2) return "Digite seu nome para receber as cartas.";
+    if (value.trim().length < 2) return "Digite seu nome para receber as pílulas.";
     return "";
   },
   email(value) {
@@ -121,7 +121,7 @@ function initForm() {
       telefone: form.querySelector("#telefone").value.replace(/\D/g, ""),
       origem: FORM_CONFIG.source,
       data: new Date().toISOString(),
-      _subject: "Novo lead · Cartas da Cocriação",
+      _subject: "Novo lead · Pílulas da Cocriação",
       _captcha: "false",
       _template: "table",
     };
@@ -141,7 +141,7 @@ function initForm() {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
       } else {
         // Modo demonstração: nenhum endpoint configurado ainda
-        console.info("[Cartas da Cocriação] Lead capturado (demo):", payload);
+        console.info("[Pílulas da Cocriação] Lead capturado (demo):", payload);
         await new Promise((resolve) => setTimeout(resolve, 700));
       }
 
@@ -149,7 +149,7 @@ function initForm() {
       success.hidden = false;
       success.scrollIntoView({ behavior: "smooth", block: "center" });
     } catch (error) {
-      console.error("[Cartas da Cocriação] Falha ao enviar lead:", error);
+      console.error("[Pílulas da Cocriação] Falha ao enviar lead:", error);
       alert(
         "Não conseguimos concluir sua inscrição agora. " +
           "Verifique sua conexão e tente novamente em instantes."

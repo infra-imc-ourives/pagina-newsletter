@@ -1,6 +1,6 @@
-# Cartas da Cocriação · by Elainne Ourives
+# Pílulas da Cocriação · by Elainne Ourives
 
-Landing page de captura de leads para a newsletter semanal **Cartas da
+Landing page de captura de leads para a newsletter semanal **Pílulas da
 Cocriação**. Página estática (HTML + CSS + JS puro), sem dependências e sem
 etapa de build — basta hospedar os arquivos.
 
@@ -28,7 +28,7 @@ sem cadastro nem chave de API, configurado em `js/main.js`:
 ```js
 const FORM_CONFIG = {
   endpoint: "https://formsubmit.co/ajax/infraestrutura@elainneourives.com.br",
-  source: "lp-cartas-da-cocriacao",
+  source: "lp-pilulas-da-cocriacao",
 };
 ```
 
@@ -47,7 +47,7 @@ o formulário envia um `POST` com JSON neste formato:
   "nome": "Maria Silva",
   "email": "maria@email.com",
   "telefone": "11999999999",
-  "origem": "lp-cartas-da-cocriacao",
+  "origem": "lp-pilulas-da-cocriacao",
   "data": "2026-07-10T12:00:00.000Z"
 }
 ```
