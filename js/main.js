@@ -6,7 +6,7 @@
 const FORM_CONFIG = {
   // Envio via FormSubmit (https://formsubmit.co) direto para o e-mail abaixo —
   // serviço gratuito, sem cadastro nem chave de API. Cada lead chega por
-  // e-mail em infraestrutura@elainneourives.com.br.
+  // e-mail em suporte@elainneourives.com.br.
   //
   // IMPORTANTE: no primeiro envio, o FormSubmit manda um e-mail de
   // confirmação para esse endereço — é preciso clicar no link uma única vez
@@ -15,7 +15,7 @@ const FORM_CONFIG = {
   // Para trocar por outra ferramenta (RD Station, ActiveCampaign, Mailchimp,
   // Make, Zapier, n8n…), basta substituir o endpoint abaixo pela URL do seu
   // webhook.
-  endpoint: "https://formsubmit.co/ajax/infraestrutura@elainneourives.com.br",
+  endpoint: "https://formsubmit.co/ajax/suporte@elainneourives.com.br",
 
   // Identificador da origem do lead, enviado junto com os dados.
   source: "lp-pilulas-da-cocriacao",

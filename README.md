@@ -22,12 +22,12 @@ Netlify, Hostinger etc. Não há build — publique a pasta como está.
 ## Como o formulário está conectado
 
 Por padrão, o formulário envia os leads via [FormSubmit](https://formsubmit.co)
-diretamente para **infraestrutura@elainneourives.com.br** — serviço gratuito,
+diretamente para **suporte@elainneourives.com.br** — serviço gratuito,
 sem cadastro nem chave de API, configurado em `js/main.js`:
 
 ```js
 const FORM_CONFIG = {
-  endpoint: "https://formsubmit.co/ajax/infraestrutura@elainneourives.com.br",
+  endpoint: "https://formsubmit.co/ajax/suporte@elainneourives.com.br",
   source: "lp-pilulas-da-cocriacao",
 };
 ```
@@ -66,7 +66,7 @@ elas.
 ## Pendências antes de ir ao ar
 
 - [ ] Clicar no link de confirmação que o FormSubmit envia para
-      infraestrutura@elainneourives.com.br assim que o primeiro lead for
+      suporte@elainneourives.com.br assim que o primeiro lead for
       capturado (ativa o recebimento dos próximos)
 - [ ] Salvar as duas fotos em `assets/` (`hero-desktop.jpg` e `hero-mobile.jpg`)
 - [ ] Apontar o link da Política de Privacidade (busque `href="#"` no
