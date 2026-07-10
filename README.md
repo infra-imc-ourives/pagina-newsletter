@@ -19,18 +19,28 @@ etapa de build — basta hospedar os arquivos.
 Qualquer hospedagem de arquivos estáticos funciona: GitHub Pages, Vercel,
 Netlify, Hostinger etc. Não há build — publique a pasta como está.
 
-## Como conectar o formulário
+## Como o formulário está conectado
 
-Edite `js/main.js` e preencha o `endpoint` no topo do arquivo:
+Por padrão, o formulário envia os leads via [FormSubmit](https://formsubmit.co)
+diretamente para **infraestrutura@elainneourives.com.br** — serviço gratuito,
+sem cadastro nem chave de API, configurado em `js/main.js`:
 
 ```js
 const FORM_CONFIG = {
-  endpoint: "https://sua-integracao.com/webhook", // RD Station, ActiveCampaign, Make, Zapier, n8n…
+  endpoint: "https://formsubmit.co/ajax/infraestrutura@elainneourives.com.br",
   source: "lp-cartas-da-cocriacao",
 };
 ```
 
-O formulário envia um `POST` com JSON neste formato:
+**Ativação obrigatória (uma única vez):** no primeiro lead recebido, o
+FormSubmit envia um e-mail de confirmação para o endereço acima — é preciso
+clicar no link desse e-mail para autorizar o recebimento dos próximos leads.
+Sem esse clique, os envios seguintes são descartados silenciosamente.
+
+Cada lead chega por e-mail em formato de tabela, com nome, e-mail e telefone.
+Para trocar por outra ferramenta (RD Station, ActiveCampaign, Mailchimp,
+Make, Zapier, n8n…), basta substituir o `endpoint` pela URL do seu webhook —
+o formulário envia um `POST` com JSON neste formato:
 
 ```json
 {
@@ -42,7 +52,7 @@ O formulário envia um `POST` com JSON neste formato:
 }
 ```
 
-Enquanto o `endpoint` estiver vazio, o formulário roda em **modo
+Deixando o `endpoint` em branco (`""`), o formulário roda em **modo
 demonstração**: valida os campos e mostra a tela de sucesso sem enviar dados
 (o lead aparece no console do navegador).
 
@@ -55,7 +65,9 @@ elas.
 
 ## Pendências antes de ir ao ar
 
+- [ ] Clicar no link de confirmação que o FormSubmit envia para
+      infraestrutura@elainneourives.com.br assim que o primeiro lead for
+      capturado (ativa o recebimento dos próximos)
 - [ ] Salvar as duas fotos em `assets/` (`hero-desktop.jpg` e `hero-mobile.jpg`)
-- [ ] Configurar o `endpoint` do formulário em `js/main.js`
 - [ ] Apontar o link da Política de Privacidade (busque `href="#"` no
       `index.html`)
