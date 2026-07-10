@@ -786,8 +786,6 @@ img {
 
   .hero__bg {
     background:
-      linear-gradient(0deg, rgba(4, 9, 24, 0.97) 22%, rgba(4, 9, 24, 0.55) 60%, rgba(4, 9, 24, 0.35) 100%),
-      url("../assets/hero-mobile.jpg") 75% top / cover no-repeat,
       radial-gradient(120% 70% at 50% 12%, #12305e 0%, #0a1a3c 45%, var(--bg-deep) 80%);
   }
 
