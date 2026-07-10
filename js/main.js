@@ -199,7 +199,82 @@ function initScrollTop() {
   });
 }
 
+/* ── Barra de progresso de rolagem ────────────────────────────── */
+function initScrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+
+  let ticking = false;
+  function update() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    bar.style.width = `${progress}%`;
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+  update();
+}
+
+/* ── Parallax sutil na foto do hero (desktop, sem reduced motion) ── */
+function initHeroParallax() {
+  const heroBg = document.querySelector(".hero__bg");
+  const hero = document.querySelector(".hero");
+  if (!heroBg || !hero) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isDesktop = window.matchMedia("(min-width: 961px)").matches;
+  if (reduceMotion || !isDesktop) return;
+
+  let ticking = false;
+  function update() {
+    const heroHeight = hero.offsetHeight;
+    const progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
+    heroBg.style.translate = `0 ${progress * 50}px`;
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+}
+
+/* ── Brilho que acompanha o cursor nos cartões de benefícios ──── */
+function initCardGlow() {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
+
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty("--mx", `${x}%`);
+      card.style.setProperty("--my", `${y}%`);
+    });
+  });
+}
+
 document.getElementById("year").textContent = new Date().getFullYear();
 initForm();
 initReveal();
 initScrollTop();
+initScrollProgress();
+initHeroParallax();
+initCardGlow();
