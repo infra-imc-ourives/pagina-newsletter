@@ -56,6 +56,25 @@ Deixando o `endpoint` em branco (`""`), o formulário roda em **modo
 demonstração**: valida os campos e mostra a tela de sucesso sem enviar dados
 (o lead aparece no console do navegador).
 
+### E-mail de boas-vindas para o lead
+
+Assim que alguém se cadastra, o FormSubmit também envia automaticamente um
+e-mail de boas-vindas para o **próprio lead** (recurso de autoresposta —
+`_autoresponse`), usando o texto configurado em `WELCOME_EMAIL_MESSAGE` no
+topo de `js/main.js`. Para editar o texto, basta alterar essa constante.
+
+Limitações do FormSubmit nesse recurso:
+
+- A mensagem é sempre a mesma para todo mundo — não é possível personalizar
+  com o nome do lead ou usar HTML/design (texto simples apenas).
+- Como o FormSubmit ainda não confirma automaticamente o recebimento desse
+  e-mail específico, faça um cadastro de teste na página publicada para
+  conferir se a mensagem chega e está com a formatação esperada.
+
+Se no futuro for necessário um e-mail com o visual da marca (cores, fotos,
+tipografia), o caminho é usar o webhook n8n abaixo com um nó de envio de
+e-mail HTML, em vez da autoresposta do FormSubmit.
+
 ## Webhook n8n
 
 Além do FormSubmit, cada cadastro também é enviado para um webhook do n8n,

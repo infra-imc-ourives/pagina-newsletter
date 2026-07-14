@@ -21,6 +21,18 @@ const FORM_CONFIG = {
   source: "lp-pilulas-da-cocriacao",
 };
 
+// E-mail de boas-vindas enviado automaticamente ao lead (autoresposta
+// do FormSubmit) assim que ele se cadastra. É uma mensagem única e
+// estática — o FormSubmit não permite personalizar com o nome do lead.
+const WELCOME_EMAIL_MESSAGE =
+  "Seja muito bem-vinda(o) às Pílulas da Cocriação! " +
+  "A partir de agora, toda semana você vai receber uma pílula exclusiva " +
+  "da Elainne Ourives direto no seu e-mail: reflexões, práticas e " +
+  "provocações para elevar sua frequência e cocriar a vida que você merece. " +
+  "Fique de olho na sua caixa de entrada (e dê uma espiadinha na aba de " +
+  "promoções ou no spam, só por garantia) — sua primeira pílula está a caminho. " +
+  "Com carinho, Equipe Elainne Ourives.";
+
 // Webhook do n8n: recebe cada lead cadastrado com os dados do
 // formulário, a URL da página e os parâmetros UTM da visita.
 // IMPORTANTE: o webhook precisa aceitar requisições cross-origin
@@ -153,6 +165,9 @@ function initForm() {
         _subject: "Novo lead · Pílulas da Cocriação",
         _captcha: "false",
         _template: "table",
+        // Autoresposta: e-mail de boas-vindas enviado automaticamente
+        // para o próprio lead (endereço no campo "email" acima).
+        _autoresponse: WELCOME_EMAIL_MESSAGE,
       };
       requests.push(
         fetch(FORM_CONFIG.endpoint, {
