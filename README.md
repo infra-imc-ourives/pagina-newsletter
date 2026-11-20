@@ -7,7 +7,8 @@ etapa de build — basta hospedar os arquivos.
 ## Estrutura da página (3 dobras)
 
 1. **Hero + formulário** — título, proposta de valor e formulário de captura
-   (nome, e-mail e WhatsApp) com validação, máscara de telefone, checkbox de
+   (nome, e-mail e WhatsApp) com validação, seletor de país para o WhatsApp
+   (Brasil por padrão, com máscara; aceita números do exterior), checkbox de
    consentimento (LGPD) e honeypot anti-spam.
 2. **O que você recebe** — três cartões de benefícios e o passo a passo da
    inscrição.
@@ -46,11 +47,36 @@ o formulário envia um `POST` com JSON neste formato:
 {
   "nome": "Maria Silva",
   "email": "maria@email.com",
+  "pais": "BR",
+  "ddi": "55",
   "telefone": "11999999999",
+  "telefone_completo": "+5511999999999",
   "origem": "lp-pilulas-da-cocriacao",
   "data": "2026-07-10T12:00:00.000Z"
 }
 ```
+
+### Telefone (WhatsApp) nacional e internacional
+
+O campo de WhatsApp tem um seletor de país ao lado, com Brasil (+55) já
+selecionado. Como cada campo é enviado:
+
+- `pais`: sigla do país escolhido (`BR`, `PT`, `US`…). Fica vazio quando a
+  pessoa escolhe "Outro país".
+- `ddi`: código do país, sem o `+`. Também fica vazio em "Outro país".
+- `telefone`: só os dígitos do número local, sem DDI. Para o Brasil, é o
+  mesmo formato que a página já enviava antes (DDD + número). Em "Outro
+  país", vai o número inteiro, já com o código do país.
+- `telefone_completo`: número no formato internacional (E.164), pronto
+  para usar em WhatsApp/CRM, ex.: `+5511999999999`, `+351912345678`.
+
+No Brasil a validação continua exigindo DDD + número (10 ou 11 dígitos). Nos
+outros países, aceita de 6 dígitos até o limite internacional de 15 dígitos
+contando o DDI. Se a pessoa digitar, colar ou o navegador autopreencher um
+número começando com `+` (ex.: `+351 912…`), o país é trocado sozinho no
+seletor. Um código que não está na lista leva para "Outro país". Para
+incluir um país novo, basta adicionar um `<option>` com `data-ddi` no
+`index.html`.
 
 Deixando o `endpoint` em branco (`""`), o formulário roda em **modo
 demonstração**: valida os campos e mostra a tela de sucesso sem enviar dados
@@ -93,7 +119,10 @@ do cadastro e os parâmetros UTM da visita:
 {
   "nome": "Maria Silva",
   "email": "maria@email.com",
+  "pais": "BR",
+  "ddi": "55",
   "telefone": "11999999999",
+  "telefone_completo": "+5511999999999",
   "origem": "lp-pilulas-da-cocriacao",
   "data": "2026-07-10T12:00:00.000Z",
   "pagina_url": "https://pagina-newsletter.vercel.app/?utm_source=instagram&utm_medium=social",
@@ -128,6 +157,3 @@ elas.
 - [ ] Clicar no link de confirmação que o FormSubmit envia para
       suporte@elainneourives.com.br assim que o primeiro lead for
       capturado (ativa o recebimento dos próximos)
-- [ ] Salvar as duas fotos em `assets/` (`hero-desktop.jpg` e `hero-mobile.jpg`)
-- [ ] Apontar o link da Política de Privacidade (busque `href="#"` no
-      `index.html`)
