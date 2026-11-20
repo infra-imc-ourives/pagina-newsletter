@@ -53,7 +53,32 @@ function getUtmParams() {
   return utms;
 }
 
-/* ── Máscara de telefone brasileiro: (00) 00000-0000 ─────────── */
+/* ── Telefone: país selecionado e formatação ──────────────────── */
+// Número internacional tem no máximo 15 dígitos contando o DDI (E.164).
+const MAX_INTL_DIGITS = 15;
+
+function getSelectedCountry(select) {
+  const option = select.options[select.selectedIndex];
+  return { code: option.value, ddi: option.dataset.ddi || "" };
+}
+
+function isBrazil(select) {
+  return getSelectedCountry(select).code === "BR";
+}
+
+// Se a pessoa digita/cola/autopreenche um número começando com "+",
+// identifica o DDI, troca o país no seletor e deixa só o número local.
+function detectCountryFromPlus(select, value) {
+  const digits = value.replace(/\D/g, "");
+  const options = Array.from(select.options).filter((opt) => opt.dataset.ddi);
+  // DDIs mais longos primeiro (ex.: +351 antes de +35…); +1 cai em EUA
+  options.sort((a, b) => b.dataset.ddi.length - a.dataset.ddi.length);
+  const match = options.find((opt) => digits.startsWith(opt.dataset.ddi));
+  if (!match) return null;
+  return { option: match, rest: digits.slice(match.dataset.ddi.length) };
+}
+
+// Máscara de telefone brasileiro: (00) 00000-0000
 function maskPhone(value) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
   if (digits.length === 0) return "";
@@ -63,6 +88,22 @@ function maskPhone(value) {
     return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
   }
   return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
+// Demais países: só dígitos e separadores comuns, sem passar de 15 dígitos
+function sanitizeIntlPhone(value, ddi) {
+  const allowed = value.replace(/[^\d\s().-]/g, "");
+  const maxDigits = MAX_INTL_DIGITS - ddi.length;
+  let count = 0;
+  let result = "";
+  for (const char of allowed) {
+    if (/\d/.test(char)) {
+      if (count >= maxDigits) break;
+      count += 1;
+    }
+    result += char;
+  }
+  return result;
 }
 
 /* ── Validações ──────────────────────────────────────────────── */
@@ -78,10 +119,35 @@ const validators = {
   },
   telefone(value) {
     const digits = value.replace(/\D/g, "");
-    if (digits.length < 10) return "Digite seu WhatsApp com DDD, ex.: (11) 99999-9999.";
+    const select = document.getElementById("pais");
+    const { code, ddi } = getSelectedCountry(select);
+
+    if (code === "BR") {
+      if (digits.length < 10) return "Digite seu WhatsApp com DDD, ex.: (11) 99999-9999.";
+      return "";
+    }
+    if (code === "OUTRO") {
+      if (!value.trim().startsWith("+") || digits.length < 8 || digits.length > MAX_INTL_DIGITS) {
+        return "Digite o número completo com o código do país, ex.: +351 912 345 678.";
+      }
+      return "";
+    }
+    if (digits.length < 6 || digits.length + ddi.length > MAX_INTL_DIGITS) {
+      return "Digite um número de WhatsApp válido para o país selecionado.";
+    }
     return "";
   },
 };
+
+// Monta os campos de telefone enviados no lead
+function buildPhoneData(select, value) {
+  const { code, ddi } = getSelectedCountry(select);
+  const digits = value.replace(/\D/g, "");
+  if (code === "OUTRO") {
+    return { pais: "", ddi: "", telefone: digits, telefone_completo: `+${digits}` };
+  }
+  return { pais: code, ddi, telefone: digits, telefone_completo: `+${ddi}${digits}` };
+}
 
 function setFieldError(input, message) {
   const field = input.closest(".field");
@@ -104,9 +170,72 @@ function initForm() {
   if (!form) return;
 
   const phoneInput = form.querySelector("#telefone");
+  const countrySelect = form.querySelector("#pais");
+  const ddiDisplay = form.querySelector("#ddi-display");
+
+  function formatPhoneInput() {
+    const { code, ddi } = getSelectedCountry(countrySelect);
+    if (code === "BR") {
+      phoneInput.value = maskPhone(phoneInput.value);
+    } else if (code === "OUTRO") {
+      // Sempre começa com "+", seguido de dígitos e separadores
+      const rest = sanitizeIntlPhone(phoneInput.value, "").trimStart();
+      phoneInput.value = phoneInput.value.trim() ? `+${rest}` : "";
+    } else {
+      phoneInput.value = sanitizeIntlPhone(phoneInput.value, ddi);
+    }
+  }
+
+  function updateCountryUi() {
+    const { code, ddi } = getSelectedCountry(countrySelect);
+    ddiDisplay.textContent = code === "OUTRO" ? "+ ?" : `+${ddi}`;
+    if (code === "BR") {
+      phoneInput.placeholder = "(00) 00000-0000";
+      phoneInput.inputMode = "numeric";
+    } else if (code === "OUTRO") {
+      phoneInput.placeholder = "+00 000 000 0000";
+      phoneInput.inputMode = "tel";
+    } else {
+      phoneInput.placeholder = "Número com código de área";
+      phoneInput.inputMode = "numeric";
+    }
+  }
+
   phoneInput.addEventListener("input", () => {
-    phoneInput.value = maskPhone(phoneInput.value);
+    // Número digitado, colado ou autopreenchido com "+DDI": ajusta o país
+    // sozinho. Enquanto o DDI ainda está incompleto (ex.: "+35"), deixa o
+    // texto como está; com 4+ dígitos sem DDI conhecido, vai para "Outro".
+    if (phoneInput.value.trim().startsWith("+") && getSelectedCountry(countrySelect).code !== "OUTRO") {
+      const detected = detectCountryFromPlus(countrySelect, phoneInput.value);
+      const digitCount = phoneInput.value.replace(/\D/g, "").length;
+      if (detected && detected.rest.length > 0) {
+        countrySelect.value = detected.option.value;
+        phoneInput.value = detected.rest;
+        updateCountryUi();
+      } else if (!detected && digitCount >= 4) {
+        countrySelect.value = "OUTRO";
+        updateCountryUi();
+      } else {
+        return;
+      }
+    }
+    formatPhoneInput();
   });
+
+  countrySelect.addEventListener("change", () => {
+    updateCountryUi();
+    if (getSelectedCountry(countrySelect).code === "OUTRO") {
+      phoneInput.value = "";
+    } else {
+      formatPhoneInput();
+    }
+    if (phoneInput.closest(".field").classList.contains("field--invalid")) {
+      setFieldError(phoneInput, validators.telefone(phoneInput.value));
+    }
+    phoneInput.focus();
+  });
+
+  updateCountryUi();
 
   // Revalida o campo assim que a pessoa corrige
   ["nome", "email", "telefone"].forEach((name) => {
@@ -150,7 +279,7 @@ function initForm() {
     const leadData = {
       nome: form.querySelector("#nome").value.trim(),
       email: form.querySelector("#email").value.trim().toLowerCase(),
-      telefone: form.querySelector("#telefone").value.replace(/\D/g, ""),
+      ...buildPhoneData(countrySelect, phoneInput.value),
       origem: FORM_CONFIG.source,
       data: new Date().toISOString(),
     };

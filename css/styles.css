@@ -320,6 +320,64 @@ img {
   box-shadow: 0 0 0 3px rgba(228, 106, 106, 0.15);
 }
 
+/* Telefone: seletor de país (DDI) + número */
+.phone {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.phone input {
+  flex: 1;
+  min-width: 0;
+}
+
+.phone__country {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.8rem 0 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  background: rgba(4, 9, 24, 0.55);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.phone__country::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: -0.2rem;
+  border-right: 1.5px solid var(--text-muted);
+  border-bottom: 1.5px solid var(--text-muted);
+  transform: rotate(45deg);
+}
+
+/* select nativo transparente por cima: mantém teclado, leitor de tela
+   e a lista nativa do celular, mostrando só o código (+55) fechado */
+.phone__country select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.phone__country select option {
+  color: #111;
+}
+
+.phone__country:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(227, 184, 89, 0.18);
+}
+
 .field__error {
   display: none;
   font-size: 0.78rem;
