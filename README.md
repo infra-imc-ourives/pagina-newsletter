@@ -145,6 +145,14 @@ branco (`""`) desativa esse envio.
 vindas do domínio desta página, já que a chamada parte diretamente do
 navegador do visitante.
 
+## Cache do CSS e do JS
+
+Os arquivos `css/styles.css` e `js/main.js` são carregados com um número de
+versão no endereço (`?v=20261120`). Sempre que um desses arquivos mudar,
+atualize esse número no `index.html` (e o do CSS também em
+`politica-de-privacidade.html`). Assim, navegadores e caches no caminho
+buscam o arquivo novo em vez de misturar HTML novo com CSS/JS antigo.
+
 ## Imagens
 
 As fotos da Elainne devem ser salvas em `assets/` — veja as instruções em
